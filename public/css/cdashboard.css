@@ -1,0 +1,110 @@
+:root {
+  --bs-body-font-family: 'Poppins', Arial, sans-serif;
+  --bs-body-line-height: 1.4;
+  --bs-body-bg: var(--bs-gray-100);
+  --bs-body-color: #333;
+  --bs-border-radius: 0.75rem;
+  --bs-primary: #4e73df;
+  --bs-success: #1cc88a;
+  --bs-warning: #f6c23e;
+  --bs-danger: #e74a3b;
+}
+
+body {
+  font-family: var(--bs-body-font-family);
+  background-color: #f4f6f9;
+  margin: 0;
+  color: var(--bs-body-color);
+}
+
+.navbar {
+  background: #8FABD4;
+  align-content: center;
+  display: flex;
+  padding: 15px 30px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+  font-family: "Momo Trust Display", sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  color: #fff !important;
+  letter-spacing: 1px;
+}
+
+.navlink {
+  font-family: "Momo Trust Display", sans-serif;
+  color: #fff;
+  font-size: 18px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  padding: 10px 15px;
+}
+
+.navlink:hover {
+  background-color: rgba(255, 0, 0, 0.832);
+  color: white;
+  transform: scale(1.05);
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(135deg, #1cc88a, #2e59d9);
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  color: #fff;
+}
+
+.sidebar {
+  min-height: 100vh;
+  background-color: #fff;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+}
+
+.sidebar .nav-link {
+  color: #333;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+  background-color: #4e73df;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.card-custom {
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  background-color: #fff;
+}
+
+.btn-feedback {
+  background-color: #1cc88a;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-feedback:hover {
+  background-color: #17a673;
+  color: white;
+  transform: scale(1.05);
+}
+
+.table th {
+  color: #4e73df;
+  font-weight: 600;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f8f9fc;
+  transition: 0.2s ease;
+}
+
+.badge {
+  font-size: 0.85rem;
+  padding: 0.45em 0.7em;
+}
+

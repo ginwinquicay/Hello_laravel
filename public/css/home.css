@@ -1,0 +1,77 @@
+body {
+  --bs-body-font-family: var(--bs-font-monospace);
+  --bs-body-line-height: 1.4;
+  --bs-body-bg: var(--bs-gray-100);
+
+  font-family: 'Poppins', Arial, sans-serif;
+  margin: 0;
+  background-color: #f8f9fa;
+}
+
+.navbar {
+  background: #8FABD4;
+  align-content: center;
+  display: flex;
+  
+}
+
+.navbar-brand {
+  font-family: "Momo Trust Display", sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  color: #fff !important;
+  letter-spacing: 1px;
+}
+
+.nav-link {
+  font-family: "Momo Trust Display", sans-serif;
+  color: #fff !important;
+  font-size: 18px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.882);
+  color: black !important;
+  transform: scale(1.05);
+  
+}
+
+.dropdown-menu {
+  border-radius: 5px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-item:hover {
+  background-color: #e4e4e4;
+}
+
+.content-box {
+  width: 60%;
+  margin: 150px auto 50px auto;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.btn-gradient {
+  display: inline-block;
+  background: #8FABD4;
+  color: #fff;
+  font-family: 'Momo Trust Display', sans-serif;
+  font-weight: bold;
+  border-radius: 40px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  padding: 10px 30px;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.btn-gradient:hover {
+  background: #8FABD4;
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  color: #fff;
+}
