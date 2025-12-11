@@ -82,7 +82,7 @@
       <h2>Admin Login</h2>
 
       <div class="mb-3">
-        <input type="email" name="email" class="form-control" placeholder="Username" required>
+        <input type="username" name="username" class="form-control" placeholder="Username" required>
       </div>
 
       <div class="mb-3">
