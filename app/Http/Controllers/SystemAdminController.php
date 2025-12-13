@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Customer;
 use App\Models\SupportStaff;
 use App\Models\Category;
-use App\Models\Priority;
+use App\Models\PriorityLevel;
 use App\Models\Submission;
 
 class SystemAdminController extends Controller
@@ -225,12 +225,13 @@ public function updateCategory(Request $request, $id)
 public function deleteCategory($id)
 {
     Category::findOrFail($id)->delete();
+    
     return redirect()->route('admin.categories')->with('success', 'Category deleted successfully.');
 }
     // ===================== PRIORITIES =====================
     public function listPriorities()
     {
-        $priorities = Priority::all();
+        $priorities = PriorityLevel::all();
         return view('admin.priorities.index', compact('priorities'));
     }
 
@@ -241,29 +242,50 @@ public function deleteCategory($id)
 
     public function storePriority(Request $request)
     {
-        $request->validate(['priorityname' => 'required|string|max:255']);
-        Priority::create(['priorityname' => $request->priorityname]);
-        return redirect()->route('admin.priorities')->with('success', 'Priority created.');
+        $request->validate([
+            'priorityname' => 'required|string|max:255',
+            'responsetime' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        PriorityLevel::create([
+            'priorityname' => $request->priorityname,
+            'responsetime' => $request ->responsetime,
+            'description' => $request ->description,
+        ]);
+
+        return redirect()->route('admin.priorities')->with('success', 'Priority Level Created.');
     }
 
     public function editPriority($id)
     {
-        $priority = Priority::findOrFail($id);
-        return view('admin.priorities.edit', compact('priority'));
+        $priorities = PriorityLevel::findOrFail($id);
+        return view('admin.priorities.edit', compact('priorities'));
     }
 
     public function updatePriority(Request $request, $id)
     {
-        $priority = Priority::findOrFail($id);
-        $request->validate(['priorityname' => 'required|string|max:255']);
-        $priority->update(['priorityname' => $request->priorityname]);
-        return redirect()->route('admin.priorities')->with('success', 'Priority updated.');
+        $priorities = PriorityLevel::findOrFail($id);
+
+        $request->validate([
+            'priorityname' => 'required|string|max:255',
+            'responsetime' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+        ]);
+
+        $priorities->update([
+            'priorityname' => $request->priorityname,
+            'responsetime' => $request->responsetime,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('admin.priorities')->with('success', 'Priority Level Updated.');
     }
 
     public function deletePriority($id)
     {
-        Priority::findOrFail($id)->delete();
-        return redirect()->route('admin.priorities')->with('success', 'Priority deleted.');
+        PriorityLevel::findOrFail($id)->delete();
+        return redirect()->route('admin.priorities')->with('success', 'Priority Deleted.');
     }
 
     // ===================== SUBMISSIONS =====================

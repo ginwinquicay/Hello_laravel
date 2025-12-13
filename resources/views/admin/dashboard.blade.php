@@ -4,15 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
-
-  <!-- BOOTSTRAP -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- GOOGLE FONTS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
-
   <style>
 :root {
   --bs-body-font-family: 'Poppins', Arial, sans-serif;
@@ -23,22 +18,18 @@
   --radius: 0.75rem;
   --brand-font: "Momo Trust Display", sans-serif;
 }
-
 body {
   background-color: var(--main-bg);
   font-family: var(--bs-body-font-family);
 }
-
 .navbar {
   background-color: var(--nav-bg);
 }
-
 .navbar-brand {
   color: white !important;
   font-weight: 500;
   font-family: var(--brand-font);
 }
-
 .navlink {
   color: #fff !important;
   font-weight: 500;
@@ -46,27 +37,21 @@ body {
   font-family: var(--brand-font);
   padding: 7px 10px;
   text-decoration: none;
-  transition: 0.3s ease;
 }
-
 .navlink:hover {
   background-color: red;
   opacity: 0.8;
-  transform: scale(1.05);
 }
-
 .card-custom {
   background: white;
   border-radius: var(--radius);
   border: none;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-
 .text-primary {
   color: var(--primary-color) !important;
   font-weight: 600;
 }
-
 .btn-dashboard {
   background-color: var(--primary-color);
   color: white;
@@ -74,7 +59,6 @@ body {
   padding: 10px 20px;
   font-weight: 500;
 }
-
 .btn-dashboard:hover {
   background-color: var(--hover-accent);
   transform: scale(1.05);
@@ -83,7 +67,6 @@ body {
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg py-3 px-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">ECHOCARE ADMIN PORTAL</a>
@@ -144,12 +127,21 @@ body {
       </div>
     </div>
 
-    <!-- CATEGORIES & PRIORITIES -->
+    <!-- CATEGORIES -->
     <div class="col-md-6">
       <div class="card card-custom p-4">
-        <h4 class="text-primary">Categories & Priorities</h4>
-        <p>Configure submission categories and priority levels.</p>
+        <h4 class="text-primary">Categories</h4>
+        <p>Configure submission categories.</p>
         <a href="{{ route('admin.categories') }}" class="btn btn-dashboard w-100">Configure</a>
+      </div>
+    </div>
+
+    <!-- PRIORITIES -->
+    <div class="col-md-6">
+      <div class="card card-custom p-4">
+        <h4 class="text-primary">Priorities</h4>
+        <p>Configure submission priority levels.</p>
+        <a href="{{ route('admin.priorities') }}" class="btn btn-dashboard w-100">Configure</a>
       </div>
     </div>
 

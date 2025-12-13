@@ -3,63 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Customer Sign Up</title>
-
+<title>User Sign Up</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Momo+Trust+Display&display=swap" rel="stylesheet">
 
 <style>
+  :root {
+    --nav-bg: #4A70A9;
+    --primary-color: #4A70A9;
+    --hover-accent: #538ce1;
+    --brand-font: "Momo Trust Display", sans-serif;
+  }
   body {
-    background-color: #8FABD4;
-    height: 100vh;
+    background-color: #e2e2e2;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+  }
+  .navbar {
+    background-color: var(--nav-bg);
+    padding: 1rem 1.5rem;
+  }
+  .navbar-brand {
+    color: #fff !important;
+    font-family: var(--brand-font);
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .nav-btn {
+      color: #fff !important;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-weight: 500;
+      font-family: "Momo Trust Display", sans-serif;
+      text-decoration: none;
+    }
+    .nav-btn:hover {
+      background-color: #243e69;
+      color: #fff !important;
+      opacity: 0.95;
+    }
+  .signup-wrapper {
+    height: calc(100vh - 72px);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
   }
-
-  .signup-container {
-    width: 100%;
-  }
-
   .card {
     border-radius: 1.2rem;
     border: none;
   }
-
   .btn-primary {
-    background-color: #4A70A9;
+    background-color: var(--primary-color);
     border: none;
-    transition: all 0.3s ease;
     font-weight: 600;
+    transition: 0.3s ease;
   }
-
   .btn-primary:hover {
-    opacity: 0.9;
-    color: #ffffff;
-    background-color: #538ce1
+    background-color: var(--hover-accent);
+    color: #fff;
   }
-
   a.text-primary {
-    color: #4A70A9 !important;
+    color: var(--primary-color) !important;
   }
-
   a.text-primary:hover {
-    color: #000000 !important;
-
+    color: #000 !important;
   }
 </style>
-
 </head>
 <body>
 
-  <div class="container signup-container">
+<nav class="navbar">
+  <div class="container-fluid">
+    <span class="navbar-brand">ECHOCARE</span>
+    <a href="{{ route('home') }}" class="nav-btn">GO BACK</a>
+  </div>
+</nav>
+
+<div class="signup-wrapper">
+  <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-5 col-lg-4">
         <div class="card shadow-lg">
           <div class="card-body p-4">
-            
+
             <h2 class="text-center mb-4 fw-semibold">Sign Up</h2>
 
             <form method="POST" action="{{ url('/register-customer') }}">
@@ -111,6 +139,7 @@
       </div>
     </div>
   </div>
+</div>
 
 </body>
 </html>

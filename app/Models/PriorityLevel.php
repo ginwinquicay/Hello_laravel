@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class PriorityLevel extends Model
+
+class PriorityLevel extends Authenticatable
 {
-    use HasFactory;
+    use Notifiable;
 
     protected $table = 'priority_level';
     protected $primaryKey = 'PriorityID';
-
-    protected $fillable = ['priorityname'];
+    public $timestamps = true;
+    protected $fillable = [
+        'priorityname',
+        'responsetime',
+        'description',
+];
 }
