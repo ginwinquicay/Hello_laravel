@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class SystemAdminSeeder extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,10 +15,10 @@ class SystemAdminSeeder extends Seeder
     {
         $admins = [
             [
-                'Fname'      => 'John',
-                'Lname'      => 'Doe',
+                'Fname'      => 'Test Admin',
+                'Lname'      => 'Ginwin',
                 'username'   => 'admin1',
-                'password'   => Hash::make('password123'),
+                'password'   => Hash::make('1234567'),
                 'email'      => 'admin1@example.com',
                 'contact_no' => '09123456789',
                 'position'   => 'Super Administrator',
@@ -26,10 +26,10 @@ class SystemAdminSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'Fname'      => 'Jane',
+                'Fname'      => 'Admin 2',
                 'Lname'      => 'Smith',
                 'username'   => 'admin2',
-                'password'   => Hash::make('password123'),
+                'password'   => Hash::make('1234567'),
                 'email'      => 'admin2@example.com',
                 'contact_no' => '09987654321',
                 'position'   => 'System Administrator',
