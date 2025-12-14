@@ -71,7 +71,7 @@ Route::middleware('auth:staff')->group(function () {
         ->name('staff.submission.status');
     Route::post('/staff/submission/{id}/comment', [SupportStaffController::class, 'addComment'])
         ->name('staff.submission.comment');
-    Route::post('/staff/submission/{id}/delete', [SupportStaffController::class, 'delete'])
+    Route::delete('/staff/submission/{id}/delete', [SupportStaffController::class, 'delete'])
         ->name('staff.submission.delete');
     Route::get('/staff/reports', [SupportStaffController::class, 'reports'])
         ->name('staff.reports');
@@ -126,8 +126,10 @@ Route::middleware('auth:admin')->group(function () {
     Route::delete('/admin/priorities/{id}', [SystemAdminController::class, 'deletePriority'])->name('admin.priorities.delete');
 
     // Submissions management (delete test/invalid)
-    Route::get('/admin/submissions', [SystemAdminController::class, 'listSubmissions'])->name('admin.submissions');
-    Route::delete('/admin/submissions/{id}', [SystemAdminController::class, 'deleteSubmission'])->name('admin.submissions.delete');
+    Route::get('admin/submissions', [SystemAdminController::class, 'listDeletedSubmissions'])->name('admin.submissions');
+    Route::post('admin/submissions/{id}/restore', [SystemAdminController::class, 'restoreSubmission'])->name('admin.submissions.restore');
+    Route::delete('admin/submissions/{id}/force-delete', [SystemAdminController::class, 'forceDeleteSubmission'])->name('admin.submissions.forceDelete');
+
 
     // Logout
     Route::get('/logout-admin', [AdminLoginController::class, 'logout'])->name('logout.admin');

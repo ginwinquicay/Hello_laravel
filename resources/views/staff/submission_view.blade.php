@@ -137,6 +137,15 @@ body {
   background-color: #860f0f;
   transform: scale(0.9);
 }
+.btn-danger{
+  transition: all 0.3s ease;
+  margin-top: 20px;
+  float: right;
+  padding: 10px 20px;
+}
+.btn-danger:hover{
+  transform: scale(1.04);
+}
 </style>
 </head>
 <body>
@@ -190,40 +199,56 @@ body {
   @endif
 </div>
 
-
     <div class="mb-3"><strong>Description:</strong> {{ $submission->description }}</div>
     <div class="mb-3"><strong>Date Submitted:</strong> {{ \Carbon\Carbon::parse($submission->dateSubmitted)->format('M d, Y') }}</div>
 
     <!-- COMMENTS SECTION -->
     <div class="card card-custom p-4 mt-4">
-      <h4 class="text mb-3">Comments</h4>
-      <div class="mb-3">
-        @forelse($submission->comments as $comment)
-          <div class="border rounded p-2 mb-2">
-            <strong>{{ $comment->staff?->Fname ?? 'Staff' }}:</strong>
-            <span>{{ $comment->comment }}</span>
-            @if($comment->action_taken)
-              <div><em>Action taken: {{ $comment->action_taken }}</em></div>
-            @endif
-            <small class="text-muted">{{ $comment->created_at->format('M d, Y H:i') }}</small>
-          </div>
-        @empty
-          <div class="text-muted">No comments yet.</div>
-        @endforelse
+  <h4 class="text mb-3">Comments</h4>
+
+  <div class="mb-3">
+    @forelse($submission->comments as $comment)
+      <div class="border rounded p-2 mb-2">
+        <strong>{{ $comment->staff?->Fname ?? 'Staff' }}:</strong>
+        <span>{{ $comment->comment }}</span>
+        @if($comment->action_taken)
+          <div><em>Action taken: {{ $comment->action_taken }}</em></div>
+        @endif
+        <small class="text-muted">{{ $comment->created_at->format('M d, Y H:i') }}</small>
       </div>
-      <form action="{{ route('staff.submission.comment', $submission->SubmissionID) }}" method="POST">
-        @csrf
-        <div class="mb-3">
-          <textarea name="comment" class="form-control" placeholder="Write your comment here..." rows="3" required></textarea>
-        </div>
-        <div class="mb-3">
-          <input type="text" name="action_taken" class="form-control" placeholder="Optional action taken">
-        </div>
-        <a href="{{ route('staff.dashboard') }}" class="btn btn-dashboards m-2">Return</a>
-        <button type="submit" class="btn btn-dashboard">Add Comment</button>
-      </form>
-    </div>
+    @empty
+      <div class="text-muted">No comments yet.</div>
+    @endforelse
   </div>
+
+  <form action="{{ route('staff.submission.comment', $submission->SubmissionID) }}" method="POST">
+    @csrf
+    <div class="mb-3">
+      <textarea name="comment" class="form-control" placeholder="Write your comment here..." rows="3" required></textarea>
+    </div>
+    <div class="mb-3">
+      <input type="text" name="action_taken" class="form-control" placeholder="Optional action taken">
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <!-- Left side: Return & Add Comment -->
+      <div class="d-flex gap-2">
+        <a href="{{ route('staff.dashboard') }}" class="btn btn-dashboards">Return</a>
+        <button type="submit" class="btn btn-dashboard">Add Comment</button>
+      </div>
+    </div>
+  </form>
+</div>
+@if(!$submission->is_deleted)
+        <form action="{{ route('staff.submission.delete', $submission->SubmissionID) }}" method="POST" onsubmit="return confirm('Are you sure you want to mark this submission as deleted?');" class="d-inline">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      @else
+        <span class="text-muted align-self-center">Deleted. Admin can permanently remove.</span>
+      @endif
+</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

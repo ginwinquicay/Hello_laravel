@@ -289,15 +289,38 @@ public function deleteCategory($id)
     }
 
     // ===================== SUBMISSIONS =====================
-    public function listSubmissions()
-    {
-        $submissions = Submission::all();
-        return view('admin.submissions.index', compact('submissions'));
-    }
+    public function listDeletedSubmissions()
+{
+    $submissions = Submission::with([
+        'customer', 
+        'category', 
+        'priority', 
+        'staff'
+        ])
+        ->where('is_deleted', true)
+        ->orderBy('dateSubmitted', 'desc')
+        ->get();
 
-    public function deleteSubmission($id)
-    {
-        Submission::findOrFail($id)->delete();
-        return redirect()->route('admin.submissions')->with('success', 'Submission deleted.');
-    }
+    return view('admin.submission.index', compact('submissions'));
+}
+
+public function restoreSubmission($id)
+{
+    $submission = Submission::findOrFail($id);
+    $submission->is_deleted = false;
+    $submission->status = 'Pending';
+    $submission->save();
+
+    return redirect()->route('admin.submissions')->with('success', 'Submission restored successfully.');
+}
+
+public function forceDeleteSubmission($id)
+{
+    $submission = Submission::findOrFail($id);
+    $submission->comments()->delete();
+    $submission->delete();
+
+    return redirect()->route('admin.submissions')->with('success', 'Submission permanently deleted.');
+}
+
 }
