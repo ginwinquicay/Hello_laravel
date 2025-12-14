@@ -151,21 +151,28 @@ table tbody tr:hover {
               </td>
               <td>{{ $submission->created_at->format('M d, Y') }}</td>
               <td>
-                <a href="{{ route('submission.edit', $submission->SubmissionID) }}" class="btn btn-sm btn-primary">Edit</a>
-                <form action="{{ route('submission.destroy', $submission->SubmissionID) }}" method="POST" class="d-inline">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-sm btn-danger"
-                      onclick="return confirm('Are you sure you want to delete this submission?')">
-                    Delete
-                  </button>
-                </form>
-                <button class="btn btn-sm btn-secondary mt-1" type="button" data-bs-toggle="collapse" 
-                    data-bs-target="#comments-{{ $submission->SubmissionID }}" aria-expanded="false" 
-                    aria-controls="comments-{{ $submission->SubmissionID }}">
-                  View Comments
-                </button>
-              </td>
+    <a href="{{ route('submission.edit', $submission->SubmissionID) }}" 
+       class="btn btn-sm btn-primary @if($submission->status === 'Closed') disabled bg-secondary border-secondary @endif"
+       @if($submission->status === 'Closed') tabindex="-1" aria-disabled="true" @endif>
+       Edit
+    </a>
+
+    <form action="{{ route('submission.destroy', $submission->SubmissionID) }}" method="POST" class="d-inline">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-sm btn-danger"
+            onclick="return confirm('Are you sure you want to delete this submission?')">
+          Delete
+        </button>
+    </form>
+
+    <button class="btn btn-sm btn-secondary mt-1" type="button" data-bs-toggle="collapse" 
+        data-bs-target="#comments-{{ $submission->SubmissionID }}" aria-expanded="false" 
+        aria-controls="comments-{{ $submission->SubmissionID }}">
+      View Comments
+    </button>
+</td>
+
             </tr>
             <tr>
               <td colspan="7" class="p-0">

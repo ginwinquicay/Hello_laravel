@@ -141,12 +141,15 @@ body {
           <div class="mb-3 text-start">
             <label for="priority" class="form-label">Priority Level</label>
             <select id="priority" name="priority" class="form-select">
-              <option value="">Select Priority</option>
-              @foreach($priorities as $p)
-                <option value="{{ $p->PriorityID }}" {{ old('priority') == $p->PriorityID ? 'selected' : '' }}>
-                  {{ $p->priorityname }}
-                </option>
-              @endforeach
+          <option value="">Select Priority</option>
+          @foreach($priorities as $p)
+            <option value="{{ $p->PriorityID }}" {{ old('priority') == $p->PriorityID ? 'selected' : '' }}>
+                {{ $p->priorityname }} 
+                @if($p->responsetime)
+                (Response time: {{ $p->responsetime }} hrs)
+                @endif
+            </option>
+          @endforeach
             </select>
             @error('priority')
               <div class="text-danger mt-1">{{ $message }}</div>

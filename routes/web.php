@@ -75,8 +75,10 @@ Route::middleware('auth:staff')->group(function () {
         ->name('staff.submission.delete');
     Route::get('/staff/reports', [SupportStaffController::class, 'reports'])
         ->name('staff.reports');
-    Route::get('/staff/reports/export-unresolved', [SupportStaffController::class, 'exportUnresolvedCsv'])
+    Route::get('/staff/reports/export-unresolved', [SupportStaffController::class, 'exportReportCsv'])
         ->name('staff.reports.export.unresolved');
+    Route::post('/staff/submission/{id}/close',[SupportStaffController::class, 'close'])
+        ->name('staff.submission.close');
 });
 
 

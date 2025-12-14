@@ -12,7 +12,7 @@
 :root {
   --main-bg: #e2e2e2;
   --nav-bg: #4A70A9;
-  --primary-color: #4A70A9;
+  --primary-color: #5e8cd2;
   --hover-accent: #3e639a;
   --radius: 0.75rem;
   --brand-font: "Momo Trust Display", sans-serif;
@@ -50,7 +50,6 @@ body {
 }
 .text-primary {
   color: var(--primary-color) !important;
-  font-weight: 600;
 }
 
 /* BUTTONS */
@@ -87,7 +86,6 @@ table tbody tr:hover {
 
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg py-3 px-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">ECHOCARE STAFF PORTAL</a>
@@ -97,7 +95,6 @@ table tbody tr:hover {
 
 <div class="container py-4">
 
-  <!-- WELCOME CARD -->
   <div class="card card-custom p-4 mb-4">
     <h2 class="text-primary mb-2">
       Welcome, {{ Auth::guard('staff')->user()->Fname ?? 'Staff' }}!
@@ -108,7 +105,6 @@ table tbody tr:hover {
     </p>
   </div>
 
-  <!-- QUICK STATS -->
   <div class="row g-4 mb-4">
     <div class="col-md-4">
       <div class="card card-custom p-4 text-center">
@@ -125,18 +121,19 @@ table tbody tr:hover {
     </div>
 
     <div class="col-md-4">
-      <div class="card card-custom p-4 text-center">
-        <h4 class="text-primary">Resolved</h4>
-        <h2 class="fw-bold">{{ $submissions->where('status','Resolved')->count() }}</h2>
-      </div>
-    </div>
+  <div class="card card-custom p-4 text-center">
+    <h4 class="text-primary">Resolved</h4>
+    <h2 class="fw-bold text-success">
+      {{ $submissions->whereIn('status', ['Resolved', 'Closed'])->count() }}
+    </h2>
   </div>
+</div>
 
-  <!-- TABLE OF TASKS -->
+
 <div class="card card-custom p-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h3 class="text-primary mb-0">Your Assigned Submissions</h3>
-    <a href="{{ route('staff.reports.export.unresolved') }}" class="btn btn-dashboard">Generate Report</a>
+    <a href="{{ route('staff.reports') }}" class="btn btn-dashboard">Generate Report</a>
   </div>
 
   <div class="table-responsive">
@@ -171,7 +168,11 @@ table tbody tr:hover {
           </td>
           <td>{{ \Carbon\Carbon::parse($submission->dateSubmitted)->format('M d, Y') }}</td>
           <td>
-            <a href="{{ route('staff.submission.show', $submission->SubmissionID) }}" class="btn btn-sm btn-dashboard">View</a>
+          @if($submission->status !== 'Closed')
+          <a href="{{ route('staff.submission.show', $submission->SubmissionID) }}"class="btn btn-sm btn-primary">View</a>
+          @else
+          <span class="text-muted fst-italic">Closed</span>
+          @endif
           </td>
         </tr>
         @empty
@@ -181,7 +182,7 @@ table tbody tr:hover {
         @endforelse
       </tbody>
     </table>
-    {{ $submissions->links() }} <!-- Pagination links -->
+    {{ $submissions->links() }}
   </div>
 </div>
 

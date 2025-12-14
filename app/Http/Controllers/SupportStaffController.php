@@ -49,17 +49,17 @@ class SupportStaffController extends Controller
 
     // Show a single submission and its comments
     public function show($id)
-    {
-        $staff = Auth::guard('staff')->user();
-        $submission = Submission::with(['comments.staff', 'category', 'priority'])->findOrFail($id);
+{
+    $submission = Submission::with(['comments.staff', 'category', 'priority'])
+        ->findOrFail($id);
 
-        // basic permission: ensure staff is assigned or allow viewing unassigned
-        if ($submission->is_deleted) {
-            abort(404);
-        }
-
-        return view('staff.submission_view', compact('submission'));
+    if ($submission->is_deleted || $submission->status === 'Closed') {
+        abort(404);
     }
+
+    return view('staff.submission_view', compact('submission'));
+}
+
 
     // Assign submission to logged-in staff
     public function assignToMe($id)
@@ -78,51 +78,48 @@ class SupportStaffController extends Controller
 
     // Update status (e.g., Pending -> In Progress -> Resolved -> Closed)
     public function updateStatus(Request $request, $id)
-    {
-        $request->validate([
-            'status' => 'required|string|max:50',
-            'comment' => 'nullable|string|max:2000',
-            'action_taken' => 'nullable|string|max:1000',
-        ]);
+{
+    $submission = Submission::findOrFail($id);
 
-        $staff = Auth::guard('staff')->user();
-        $submission = Submission::findOrFail($id);
+    $flow = [
+        'Pending' => 'In Progress',
+        'In Progress' => 'Resolved',
+        'Resolved' => 'Closed',
+    ];
 
-        if ($submission->is_deleted) {
-            return back()->with('error', 'Cannot update deleted submission.');
-        }
+    $current = $submission->status;
+    $nextAllowed = $flow[$current] ?? null;
 
-        $submission->status = $request->status;
-
-        // if resolved, set resolved_at
-        if (strtolower($request->status) === 'resolved' || strtolower($request->status) === 'closed') {
-            $submission->resolved_at = now();
-        }
-
-        // if status moved from resolved back to something else, clear resolved_at (optional)
-        if (!in_array(strtolower($request->status), ['resolved', 'closed'])) {
-            $submission->resolved_at = null;
-        }
-
-        // assign staff if not assigned
-        if (empty($submission->StaffID)) {
-            $submission->StaffID = $staff->StaffID;
-        }
-
-        $submission->save();
-
-        // Add comment
-        if ($request->filled('comment') || $request->filled('action_taken')) {
-            SubmissionComment::create([
-                'SubmissionID' => $submission->SubmissionID,
-                'StaffID' => $staff->StaffID,
-                'comment' => $request->comment ?? '',
-                'action_taken' => $request->action_taken ?? null,
-            ]);
-        }
-
-        return back()->with('success', 'Status updated successfully.');
+    if ($request->status !== $current && $request->status !== $nextAllowed) {
+        return back()->with('error', 'You must follow the required workflow order.');
     }
+
+    // ✅ SET resolved_at ONLY ON FIRST RESOLVE
+    if ($request->status === 'Resolved' && is_null($submission->resolved_at)) {
+        $submission->resolved_at = now();
+    }
+
+    $submission->status = $request->status;
+    $submission->save();
+
+    return back()->with('success', 'Status updated successfully.');
+}
+
+public function close($id)
+{
+    $submission = Submission::findOrFail($id);
+
+    if ($submission->status !== 'Resolved') {
+        return back()->with('error', 'Only resolved submissions can be closed.');
+    }
+
+    $submission->status = 'Closed';
+    $submission->save();
+
+    return redirect()
+        ->route('staff.dashboard')
+        ->with('success', 'Submission closed successfully.');
+}
 
     // Add comment only
     public function addComment(Request $request, $id)
@@ -201,11 +198,13 @@ class SupportStaffController extends Controller
 
         // Average resolution time (in hours)
         $avgResolution = DB::table('submission')
-            ->select(DB::raw('avg(timestampdiff(SECOND, dateSubmitted, resolved_at))/3600 as avg_hours'))
+            ->select(DB::raw('AVG(TIMESTAMPDIFF(SECOND, dateSubmitted, resolved_at)) / 3600 AS avg_hours'))
             ->whereNotNull('resolved_at')
-            ->whereBetween(DB::raw('date(resolved_at)'), [$from, $to])
+            ->whereIn('status', ['Resolved', 'Closed'])
+            ->whereBetween(DB::raw('DATE(resolved_at)'), [$from, $to])
             ->where('is_deleted', false)
             ->first();
+
 
         $avgHours = $avgResolution->avg_hours ?? null;
 
@@ -221,10 +220,11 @@ class SupportStaffController extends Controller
             ->whereBetween(DB::raw('date(dateSubmitted)'), [$from, $to])
             ->count();
 
-        $totalResolved = Submission::where('is_deleted', false)
-            ->whereNotNull('resolved_at')
-            ->whereBetween(DB::raw('date(resolved_at)'), [$from, $to])
+        $totalResolved = Submission::whereNotNull('resolved_at')
+            ->whereBetween(DB::raw('DATE(resolved_at)'), [$from, $to])
+            ->where('is_deleted', false)
             ->count();
+
 
         return view('staff.reports', compact(
             'feedbackTrends', 'avgHours', 'unresolved', 'from', 'to', 'totalSubmitted', 'totalResolved'
@@ -232,39 +232,85 @@ class SupportStaffController extends Controller
     }
 
     // CSV export for unresolved cases or summary
-    public function exportUnresolvedCsv(Request $request)
-    {
-        $from = $request->input('from', now()->subDays(30)->format('Y-m-d'));
-        $to = $request->input('to', now()->format('Y-m-d'));
+    public function exportReportCsv(Request $request)
+{
+    $from = $request->input('from', now()->subDays(30)->format('Y-m-d'));
+    $to = $request->input('to', now()->format('Y-m-d'));
 
-        $rows = Submission::where('is_deleted', false)
-            ->whereNotIn('status', ['Resolved', 'Closed'])
-            ->whereBetween(DB::raw('date(dateSubmitted)'), [$from, $to])
-            ->orderBy('dateSubmitted', 'desc')
-            ->get();
+    // 1) Unresolved submissions
+    $unresolved = Submission::with(['customer', 'category', 'priority', 'staff'])
+        ->where('is_deleted', false)
+        ->whereNotIn('status', ['Resolved', 'Closed'])
+        ->whereBetween(DB::raw('DATE(dateSubmitted)'), [$from, $to])
+        ->orderBy('dateSubmitted', 'desc')
+        ->get();
 
-        $callback = function () use ($rows) {
-            $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['SubmissionID','CustomerID','CategoryID','PriorityID','StaffID','Status','DateSubmitted','Description']);
-            foreach ($rows as $r) {
-                fputcsv($handle, [
-                    $r->SubmissionID,
-                    $r->CustomerID,
-                    $r->CategoryID,
-                    $r->PriorityID,
-                    $r->StaffID,
-                    $r->status,
-                    $r->dateSubmitted,
-                    str_replace(["\r","\n"], ['',' '], $r->description),
-                ]);
-            }
-            fclose($handle);
-        };
+    // 2) Feedback trends by category
+    $feedbackTrends = Submission::with('category')
+        ->select('CategoryID', DB::raw('count(*) as total'))
+        ->whereBetween(DB::raw('DATE(dateSubmitted)'), [$from, $to])
+        ->where('is_deleted', false)
+        ->groupBy('CategoryID')
+        ->get();
 
-        $filename = 'unresolved_submissions_'.now()->format('Ymd_His').'.csv';
+    // 3) Average resolution time per category (in hours)
+    $resolutionTimes = Submission::with('category')
+        ->select('CategoryID', DB::raw('AVG(TIMESTAMPDIFF(SECOND, dateSubmitted, resolved_at)) / 3600 AS avg_hours'))
+        ->whereNotNull('resolved_at')
+        ->whereIn('status', ['Resolved', 'Closed'])
+        ->whereBetween(DB::raw('DATE(resolved_at)'), [$from, $to])
+        ->where('is_deleted', false)
+        ->groupBy('CategoryID')
+        ->get();
 
-        return response()->streamDownload($callback, $filename, [
-            'Content-Type' => 'text/csv',
-        ]);
-    }
+    $callback = function () use ($unresolved, $feedbackTrends, $resolutionTimes) {
+        $handle = fopen('php://output', 'w');
+
+        // Unresolved submissions
+        fputcsv($handle, ['Unresolved Submissions']);
+        fputcsv($handle, ['SubmissionID','Customer Name','Category','Priority','Staff','Status','Date Submitted','Description']);
+        foreach ($unresolved as $sub) {
+            fputcsv($handle, [
+                $sub->SubmissionID,
+                $sub->customer?->Fname . ' ' . $sub->customer?->Lname ?? 'N/A',
+                $sub->category?->categoryname ?? 'N/A',
+                $sub->priority?->priorityname ?? 'N/A',
+                $sub->staff?->Fname . ' ' . $sub->staff?->Lname ?? 'Unassigned',
+                $sub->status,
+                $sub->dateSubmitted,
+                str_replace(["\r","\n"], ['',' '], $sub->description),
+            ]);
+        }
+
+        // Feedback trends
+        fputcsv($handle, []); // empty row
+        fputcsv($handle, ['Feedback Trends']);
+        fputcsv($handle, ['Category','Total Submissions']);
+        foreach ($feedbackTrends as $trend) {
+            fputcsv($handle, [
+                $trend->category?->categoryname ?? 'N/A',
+                $trend->total,
+            ]);
+        }
+
+        // Resolution times
+        fputcsv($handle, []); // empty row
+        fputcsv($handle, ['Average Resolution Time (Hours) Per Category']);
+        fputcsv($handle, ['Category','Avg Resolution Time (Hours)']);
+        foreach ($resolutionTimes as $res) {
+            fputcsv($handle, [
+                $res->category?->categoryname ?? 'N/A',
+                round($res->avg_hours, 2),
+            ]);
+        }
+
+        fclose($handle);
+    };
+
+    $filename = 'submission_report_'.now()->format('Ymd_His').'.csv';
+
+    return response()->streamDownload($callback, $filename, [
+        'Content-Type' => 'text/csv',
+    ]);
+}
 }

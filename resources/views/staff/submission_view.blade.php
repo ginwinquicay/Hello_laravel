@@ -24,6 +24,8 @@
   --hover-accent2: #486591;
   --radius: 0.75rem;
   --brand-font: "Momo Trust Display", sans-serif;
+  --text-color: #6494da;
+  --danger-color: red;
 }
 
 /* GLOBAL */
@@ -79,6 +81,9 @@ body {
   color: var(--primary-color) !important;
   font-weight: 600;
 }
+.text{
+  color: var(--text-color);
+}
 
 /* BUTTONS */
 .btn-dashboard {
@@ -100,7 +105,8 @@ body {
   color: white;
   border-radius: 8px;
   padding: 10px 20px;
-  font-weight: 500;transition: all 0.3s ease;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 .btn-dashboards:hover {
   background-color: var(--hover-accent2);
@@ -118,6 +124,19 @@ body {
 .form-control {
   border-radius: 8px;
 }
+.clsbtn{
+  background-color: var(--danger-color);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 6px;
+  border-color: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.clsbtn:hover{
+  background-color: #860f0f;
+  transform: scale(0.9);
+}
 </style>
 </head>
 <body>
@@ -132,7 +151,7 @@ body {
 <div class="container py-4">
 
   <div class="card card-custom p-4 mb-4">
-    <h2 class="text-dark mb-3">Submission Details</h2>
+    <h2 class="text mb-3">Submission Details</h2>
 
     <div class="mb-3"><strong>ID:</strong> {{ $submission->SubmissionID }}</div>
     <div class="mb-3"><strong>Customer:</strong> {{ $submission->customer->Fname ?? 'N/A' }} {{ $submission->customer->Lname ?? '' }}</div>
@@ -151,24 +170,33 @@ body {
     </div>
 
     <div class="mb-3">
-      <strong>Status:</strong>
-      <form action="{{ route('staff.submission.status', $submission->SubmissionID) }}" method="POST">
-        @csrf
-        <select name="status" class="form-select w-auto d-inline-block" onchange="this.form.submit()">
-          <option value="Pending" @if($submission->status == 'Pending') selected @endif>Pending</option>
-          <option value="In Progress" @if($submission->status == 'In Progress') selected @endif>In Progress</option>
-          <option value="Resolved" @if($submission->status == 'Resolved') selected @endif>Resolved</option>
-          <option value="Closed" @if($submission->status == 'Closed') selected @endif>Closed</option>
-        </select>
-      </form>
-    </div>
+  <strong>Status:</strong>
+  <form action="{{ route('staff.submission.status', $submission->SubmissionID) }}" method="POST" class="d-inline">
+    @csrf
+    <select name="status" class="form-select w-auto d-inline-block" onchange="this.form.submit()">
+      <option value="Pending" @selected($submission->status == 'Pending')>Pending</option>
+      <option value="In Progress" @selected($submission->status == 'In Progress') @disabled($submission->status != 'Pending')>In Progress</option>
+      <option value="Resolved" @selected($submission->status == 'Resolved') @disabled($submission->status != 'In Progress')>Resolved</option>
+    </select>
+  </form>
+
+  @if($submission->status === 'Resolved')
+    <form action="{{ route('staff.submission.close', $submission->SubmissionID) }}" method="POST" class="d-inline">
+      @csrf
+      <button type="submit" class="clsbtn btn-danger ms-2" onclick="return confirm('Are you sure you want to close this submission?')">
+        Close
+      </button>
+    </form>
+  @endif
+</div>
+
 
     <div class="mb-3"><strong>Description:</strong> {{ $submission->description }}</div>
     <div class="mb-3"><strong>Date Submitted:</strong> {{ \Carbon\Carbon::parse($submission->dateSubmitted)->format('M d, Y') }}</div>
 
     <!-- COMMENTS SECTION -->
     <div class="card card-custom p-4 mt-4">
-      <h4 class="text-dark mb-3">Comments</h4>
+      <h4 class="text mb-3">Comments</h4>
       <div class="mb-3">
         @forelse($submission->comments as $comment)
           <div class="border rounded p-2 mb-2">
@@ -197,7 +225,6 @@ body {
     </div>
   </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

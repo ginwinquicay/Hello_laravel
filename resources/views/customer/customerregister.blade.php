@@ -7,12 +7,11 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&family=Momo+Trust+Display&display=swap" rel="stylesheet">
-
 <style>
   :root {
     --nav-bg: #4A70A9;
-    --primary-color: #4A70A9;
-    --hover-accent: #538ce1;
+    --primary-color: #538ce1;
+    --hover-accent: #4A70A9;
     --brand-font: "Momo Trust Display", sans-serif;
   }
   body {
@@ -32,17 +31,17 @@
     font-weight: 500;
   }
   .nav-btn {
-      color: #fff !important;
-      padding: 7px 10px;
-      border-radius: 6px;
-      font-weight: 500;
-      font-family: "Momo Trust Display", sans-serif;
-      text-decoration: none;
+    color: #fff !important;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-family: "Momo Trust Display", sans-serif;
+    text-decoration: none;
     }
-    .nav-btn:hover {
-      background-color: #243e69;
-      color: #fff !important;
-      opacity: 0.95;
+  .nav-btn:hover {
+    background-color: #243e69;
+    color: #fff !important;
+    opacity: 0.95;
     }
   .signup-wrapper {
     height: calc(100vh - 72px);
@@ -54,10 +53,15 @@
     border-radius: 1.2rem;
     border: none;
   }
+  .btn{
+    transition: all 0.3s ease;
+  }
+  .btn:hover{
+    transform: scale(0.98);
+  }
   .btn-primary {
     background-color: var(--primary-color);
     border: none;
-    font-weight: 600;
     transition: 0.3s ease;
   }
   .btn-primary:hover {
@@ -69,6 +73,9 @@
   }
   a.text-primary:hover {
     color: #000 !important;
+  }
+  .text:hover{
+    color: purple;
   }
 </style>
 </head>
@@ -127,19 +134,16 @@
 
               <p class="text-center mt-3 mb-0">
                 Already have an account?
-                <a href="{{ url('/login-customer') }}" class="text-decoration-none text-primary fw-semibold">
+                <a href="{{ url('/login-customer') }}" class="text text-decoration-none">
                   Login here
                 </a>
               </p>
-
             </form>
-
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 </body>
 </html>

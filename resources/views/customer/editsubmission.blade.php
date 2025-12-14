@@ -117,16 +117,17 @@ body {
       </div>
 
       <div class="mb-3">
-        <label for="PriorityID" class="form-label">Priority Level</label>
-        <select name="PriorityID" id="PriorityID" class="form-select" required>
-          <option value="" disabled>Select priority</option>
-          @foreach ($priorities as $priority)
-            <option value="{{ $priority->PriorityID }}" {{ $submission->PriorityID == $priority->PriorityID ? 'selected' : '' }}>
-              {{ $priority->priorityname }}
-            </option>
-          @endforeach
-        </select>
-      </div>
+  <label for="PriorityID" class="form-label">Priority Level</label>
+  <select name="PriorityID" id="PriorityID" class="form-select" required>
+    <option value="" disabled>Select priority</option>
+    @foreach ($priorities as $priority)
+      <option value="{{ $priority->PriorityID }}" 
+        {{ $submission->PriorityID == $priority->PriorityID ? 'selected' : '' }}>
+        {{ $priority->priorityname }} (Response time: {{ $priority->responsetime }} hrs)
+      </option>
+    @endforeach
+  </select>
+</div>
 
       <div class="d-flex justify-content-end gap-2">
         <a href="{{ url('/customer/dashboard') }}" class="btn btn-ret">Cancel</a>
