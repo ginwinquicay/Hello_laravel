@@ -11,7 +11,7 @@ class SystemAdmin extends Authenticatable
 
     protected $table = 'system_admin';
     protected $primaryKey = 'AdminID';
-    public $incrementing = true; // ID is auto-increment
+    public $incrementing = true;
     protected $keyType = 'int';
 
     protected $fillable = [
@@ -28,7 +28,6 @@ class SystemAdmin extends Authenticatable
         'password',
     ];
 
-    // For authentication to work with username instead of email
     public function getAuthIdentifierName()
     {
         return 'AdminID';

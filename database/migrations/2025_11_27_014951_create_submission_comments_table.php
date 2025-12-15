@@ -19,7 +19,6 @@ return new class extends Migration
             $table->index('SubmissionID');
             $table->index('StaffID');
 
-            // optional foreign keys if tables exist
             $table->foreign('SubmissionID')->references('SubmissionID')->on('submission')->onDelete('cascade');
             $table->foreign('StaffID')->references('StaffID')->on('support_staff');
         });

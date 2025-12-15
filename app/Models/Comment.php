@@ -22,6 +22,6 @@ class Comment extends Model
 
     public function staff()
     {
-        return $this->belongsTo(Staff::class, 'staff_id'); // adjust if needed
+        return $this->belongsTo(Staff::class, 'staff_id');
     }
 }

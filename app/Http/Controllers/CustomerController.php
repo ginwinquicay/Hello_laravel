@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
+    // Displays the customer dashboard with their submissions and related staff comments
     public function dashboard()
     {
         $submissions = Submission::with('comments.staff')
@@ -19,11 +20,11 @@ class CustomerController extends Controller
         return view('customer.dashboard', compact('submissions'));
     }
 
-    // Show feedback form
+    // Shows the feedback form with available categories and priorities
     public function feedbackForm()
     {
         $categories = Category::all();
-        $priorities = Priority::all(); // each priority has a `responsetime` field
+        $priorities = Priority::all();
 
         return view('customer.feedback', compact('categories', 'priorities'));
     }

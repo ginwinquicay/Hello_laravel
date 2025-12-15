@@ -20,35 +20,33 @@
       font-weight: 500;
       font-family: "Momo Trust Display", sans-serif;
     }
-    .text-primary{
-      
-    }
     .content-box {
+      color: #0049b7;
       max-width: 700px;
-      margin: 150px auto 20px;
+      margin: 130px auto 20px;
       background: #e2e2e2;
     }
     .login-container {
-  max-width: 400px;
-  margin: 0 auto 0;
-  background: transparent;
-  padding: 30px;
-  border-radius: 15px;
-}
-  .login-btn {
-  display: block;
-  width: 100%;
-  background: #6494da;
-  color: #fff;
-  padding: 14px 0;        /* FIX: remove horizontal padding */
-  border-radius: 25px;
-  font-weight: 500;
-  font-size: 18px;        /* optional: more balanced */
-  text-decoration: none;
-  margin-bottom: 12px;
-  text-align: center;
-  transition: all 0.3s ease;
-}
+      max-width: 400px;
+      margin: 30px auto 0;
+      background: transparent;
+      padding: 30px;
+      border-radius: 15px;
+    }
+    .login-btn {
+      display: block;
+      width: 100%;
+      background: #6494da;
+      color: #fff;
+      padding: 14px 0;       
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 25px;        
+      text-decoration: none;
+      margin-bottom: 12px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
     .login-btn:hover {
       background-color: #4A70A9;
       color: #fff;
@@ -66,7 +64,7 @@
 </nav>
 
 <div class="content-box text-center">
-  <h3 class="fw-bold mb-3">Welcome to ECHOCARE</h3>
+  <h3 class="fw-bold mb-3">EchoCare Services</h3>
 </div>
 
 <div class="login-container text-center">

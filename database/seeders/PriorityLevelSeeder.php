@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class PriorityLevelSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+
     public function run(): void
     {
         DB::table('priority_level')->insert([

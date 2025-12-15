@@ -8,27 +8,29 @@ use Illuminate\Support\Facades\Auth;
 
 class StaffLoginController extends Controller
 {
-   public function showLoginForm() {
-    return view('staff.stafflogin'); // matches your route + blade
-}
-
-public function login(Request $request) {
-    $credentials = $request->only('email', 'password');
-
-    if (Auth::guard('staff')->attempt($credentials)) {
-        return redirect('/staff/dashboard'); // matches your route
+    // Shows the staff login view
+    public function showLoginForm() {
+        return view('staff.stafflogin');
     }
 
-    return back()->with(['error' => 'Invalid email or password.']);
-}
+    // Authenticates the staff using the staff guard and redirects on success
+    public function login(Request $request) {
+        $credentials = $request->only('email', 'password');
 
-public function logout(Request $request)
-{
-    Auth::guard('staff')->logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
+        if (Auth::guard('staff')->attempt($credentials)) {
+            return redirect('/staff/dashboard');
+        }
 
-    return redirect('/login-staff'); // redirect back to your login page
-}
+        return back()->with(['error' => 'Invalid email or password.']);
+    }
 
+    // Logs out the authenticated staff, clears the session, and redirects to staff login
+    public function logout(Request $request)
+    {
+        Auth::guard('staff')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/login-staff');
+    }
 }

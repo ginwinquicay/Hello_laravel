@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reports</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reports</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
 :root {
   --main-bg: #e2e2e2;
   --nav-bg: #4A70A9;
@@ -24,27 +26,27 @@ body {
   margin: 0;
 }
 
-/* NAVBAR */
 .navbar {
   background-color: var(--nav-bg);
 }
+
 .navbar-brand {
   color: white !important;
   font-weight: 500;
   font-family: var(--brand-font);
 }
-/* CARDS */
+
 .card-custom {
   background: white;
   border-radius: var(--radius);
   border: none;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
+
 .text-primary {
   color: var(--primary-color) !important;
 }
 
-/* BUTTONS */
 .btn-dashboard {
   background-color: var(--primary-color);
   color: white;
@@ -54,27 +56,31 @@ body {
   width: 200px;
   transition: all 0.3s ease;
 }
+
 .btn-dashboard:hover {
   background-color: var(--hover-accent);
-  transform: scale(0.98);
   color: white;
-}
-.btn{
-  transition: all 0.3s ease;
-}
-.btn:hover{
   transform: scale(0.98);
 }
 
-/* TABLE */
+.btn {
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: scale(0.98);
+}
+
 table thead {
   background-color: #e8edf5;
 }
+
 table tbody tr:hover {
   background-color: #f5f7fb;
 }
-  </style>
+</style>
 </head>
+
 <body>
 
 <nav class="navbar navbar-expand-lg py-3 px-4">
@@ -87,8 +93,8 @@ table tbody tr:hover {
 
   <div class="card card-custom p-4 mb-4">
     <h2 class="text-primary mb-2">Reports Overview</h2>
-    <p class="mb-0">Analyze submissions, resolution performance, and unresolved cases.</p>
-    <a href="{{ route('staff.dashboard') }}" class="btn btn-dashboard m-2">Dashboard</a>
+    <p class="mb-2">Analyze submissions, resolution performance, and unresolved cases.</p>
+    <a href="{{ route('staff.dashboard') }}" class="btn btn-dashboard">Dashboard</a>
   </div>
 
   <div class="card card-custom p-4 mb-4">
@@ -139,7 +145,7 @@ table tbody tr:hover {
       <p class="text-muted">No submissions found for this date range.</p>
     @else
       <div class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover align-middle">
           <thead>
             <tr>
               <th>Category</th>
@@ -163,14 +169,16 @@ table tbody tr:hover {
     <div class="d-flex justify-content-between align-items-center mb-3">
       <h4 class="text-danger mb-0">Unresolved Cases</h4>
       <a href="{{ route('staff.reports.export.unresolved', ['from'=>$from, 'to'=>$to]) }}"
-         class="btn btn-success">Download CSV</a>
+         class="btn btn-success">
+        Download CSV
+      </a>
     </div>
 
     @if($unresolved->isEmpty())
       <p class="text-muted">No unresolved cases in this date range.</p>
     @else
       <div class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover align-middle">
           <thead>
             <tr>
               <th>ID</th>
@@ -193,7 +201,9 @@ table tbody tr:hover {
       </div>
     @endif
   </div>
+
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

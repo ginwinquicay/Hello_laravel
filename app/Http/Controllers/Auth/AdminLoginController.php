@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller
 {
+    // Shows the admin login view
     public function showLoginForm() {
         return view('admin.adminlogin');
     }
 
+    // Authenticates the admin using the admin guard and redirects on success
     public function login(Request $request) {
         $credentials = $request->only('username', 'password');
 
@@ -21,12 +23,14 @@ class AdminLoginController extends Controller
 
         return back()->with(['error' => 'Invalid username or password.']);
     }
+
+    // Logs out the authenticated admin, clears the session, and redirects to home
     public function logout(Request $request)
     {
-            Auth::guard('admin')->logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
+        Auth::guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect('/home');
     }
-
 }

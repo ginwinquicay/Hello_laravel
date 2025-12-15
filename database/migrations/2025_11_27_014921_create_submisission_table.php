@@ -22,13 +22,11 @@ return new class extends Migration
             $table->boolean('is_deleted')->default(false);
             $table->timestamps();
 
-            // indexes and foreign keys (if you have these tables)
             $table->index('CustomerID');
             $table->index('CategoryID');
             $table->index('PriorityID');
             $table->index('StaffID');
 
-            // (optional) add foreign keys if related tables exist
             $table->foreign('CustomerID')->references('CustomerID')->on('customer')->onDelete('cascade');
             $table->foreign('CategoryID')->references('CategoryID')->on('category');
             $table->foreign('PriorityID')->references('PriorityID')->on('priority_level');

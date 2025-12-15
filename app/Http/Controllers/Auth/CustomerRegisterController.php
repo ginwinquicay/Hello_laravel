@@ -10,11 +10,13 @@ use Illuminate\Validation\Rule;
 
 class CustomerRegisterController extends Controller
 {
+    // Shows the customer registration form
     public function showRegisterForm()
     {
         return view('customer.customerregister');
     }
 
+    // Handles customer registration, validates input, creates a new customer, and redirects to login
     public function register(Request $request)
     {
         $request->validate([
@@ -26,7 +28,7 @@ class CustomerRegisterController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        $customer = new customer();
+        $customer = new Customer();
         $customer->Fname = $request->Fname;
         $customer->Lname = $request->Lname;
         $customer->address = $request->address;

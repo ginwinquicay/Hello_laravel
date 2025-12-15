@@ -9,58 +9,59 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
   <style>
-:root {
-  --bs-body-font-family: 'Poppins', Arial, sans-serif;
-  --main-bg: #e2e2e2;
-  --nav-bg: #4A70A9;
-  --primary-color: #4A70A9;
-  --button-color: #6494da;
-  --hover-accent: #538ce1;
-  --radius: 0.75rem;
-  --brand-font: "Momo Trust Display", sans-serif;
-}
-body {
-  background-color: var(--main-bg);
-  font-family: var(--bs-body-font-family);
-}
-.navbar {
-  background-color: var(--nav-bg);
-}
-.navbar-brand {
-  color: white !important;
-  font-weight: 500;
-  font-family: var(--brand-font);
-}
-.card-custom {
-  background: white;
-  border-radius: var(--radius);
-  border: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-.text-primary {
-  color: var(--primary-color) !important;
-}
-.btn-dashboard {
-  background-color: var(--button-color);
-  color: white;
-  border-radius: 8px;
-  padding: 10px 20px;
-  transition: all 0.3s ease;
-}
-.btn-dashboard:hover {
-  background-color: var(--primary-color);
-  transform: scale(0.98);
-  color: white;
-}
-form label {
-  font-weight: 500;
-}
-.container{
-  max-width: 600px;
-}
+    :root {
+      --bs-body-font-family: 'Poppins', Arial, sans-serif;
+      --main-bg: #e2e2e2;
+      --nav-bg: #4A70A9;
+      --primary-color: #4A70A9;
+      --button-color: #6494da;
+      --hover-accent: #538ce1;
+      --radius: 0.75rem;
+      --brand-font: "Momo Trust Display", sans-serif;
+    }
+    body {
+      background-color: var(--main-bg);
+      font-family: var(--bs-body-font-family);
+    }
+    .navbar {
+      background-color: var(--nav-bg);
+    }
+    .navbar-brand {
+      color: white !important;
+      font-weight: 500;
+      font-family: var(--brand-font);
+    }
+    .card-custom {
+      background: white;
+      border-radius: var(--radius);
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .text-primary {
+      color: var(--primary-color) !important;
+    }
+    .btn-dashboard {
+      background-color: var(--button-color);
+      color: white;
+      border-radius: 8px;
+      padding: 10px 20px;
+      transition: all 0.3s ease;
+    }
+    .btn-dashboard:hover {
+      background-color: var(--primary-color);
+      transform: scale(0.98);
+      color: white;
+    }
+    form label {
+      font-weight: 500;
+    }
+    .container{
+      max-width: 600px;
+    }
   </style>
 </head>
 <body>
+
 <nav class="navbar navbar-expand-lg py-3 px-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ route('admin.dashboard') }}">ECHOCARE ADMIN PORTAL</a>
@@ -96,7 +97,6 @@ form label {
       <button type="submit" class="btn btn-dashboard">Update</button>
     </form>
   </div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

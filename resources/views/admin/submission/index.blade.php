@@ -9,60 +9,70 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
   <style>
-:root {
-  --bs-body-font-family: 'Poppins', Arial, sans-serif;
-  --main-bg: #e2e2e2;
-  --nav-bg: #4A70A9;
-  --primary-color: #4A70A9;
-  --button-color: #6494da;
-  --hover-accent: #538ce1;
-  --radius: 0.75rem;
-  --brand-font: "Momo Trust Display", sans-serif;
-}
-.badge-orange {
-  background-color: #fd7e14 !important;
-  color: white;
-}
-body {
-  background-color: var(--main-bg);
-  font-family: var(--bs-body-font-family);
-}
-.navbar {
-  background-color: var(--nav-bg);
-}
-.navbar-brand {
-  color: white !important;
-  font-weight: 500;
-  font-family: var(--brand-font);
-}
-.card-custom {
-  background: white;
-  border-radius: var(--radius);
-  border: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-.text-primary {
-  color: var(--primary-color) !important;
-}
-.btn-dashboard {
-  background-color: var(--button-color);
-  color: white;
-  border-radius: 8px;
-  padding: 10px 20px;
-  transition: all 0.3s ease;
-}
-.btn-dashboard:hover {
-  background-color: var(--primary-color);
-  transform: scale(0.98);
-  color: white;
-}
-.table thead {
-  background-color: #e8edf5;
-}
-.table tbody tr:hover {
-  background-color: #f5f7fb;
-}
-</style>
+    :root {
+      --bs-body-font-family: 'Poppins', Arial, sans-serif;
+      --main-bg: #e2e2e2;
+      --nav-bg: #4A70A9;
+      --primary-color: #4A70A9;
+      --button-color: #6494da;
+      --hover-accent: #538ce1;
+      --radius: 0.75rem;
+      --brand-font: "Momo Trust Display", sans-serif;
+    }
+
+    .badge-orange {
+      background-color: #fd7e14 !important;
+      color: white;
+    }
+
+    body {
+      background-color: var(--main-bg);
+      font-family: var(--bs-body-font-family);
+    }
+
+    .navbar {
+      background-color: var(--nav-bg);
+    }
+
+    .navbar-brand {
+      color: white !important;
+      font-weight: 500;
+      font-family: var(--brand-font);
+    }
+
+    .card-custom {
+      background: white;
+      border-radius: var(--radius);
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .text-primary {
+      color: var(--primary-color) !important;
+    }
+
+    .btn-dashboard {
+      background-color: var(--button-color);
+      color: white;
+      border-radius: 8px;
+      padding: 10px 20px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-dashboard:hover {
+      background-color: var(--primary-color);
+      transform: scale(0.98);
+      color: white;
+    }
+
+    .table thead {
+      background-color: #e8edf5;
+    }
+
+    .table tbody tr:hover {
+      background-color: #f5f7fb;
+    }
+  </style>
 </head>
 <body>
 
@@ -114,8 +124,8 @@ body {
                 <td>{{ $sub->customer?->Fname ?? 'N/A' }} {{ $sub->customer?->Lname ?? '' }}</td>
                 <td>{{ $sub->category?->categoryname ?? 'N/A' }}</td>
                 <td>
-                    @php $priority = $sub->priority?->priorityname; @endphp
-                    <span class="badge
+                  @php $priority = $sub->priority?->priorityname; @endphp
+                  <span class="badge
                     @if($priority === 'Critical') bg-danger
                     @elseif($priority === 'High') badge-orange
                     @elseif($priority === 'Medium') bg-warning text-dark
@@ -123,20 +133,20 @@ body {
                     @else bg-secondary
                     @endif">
                     {{ $priority ?? 'N/A' }}
-                    </span>
+                  </span>
                 </td>
                 <td>{{ $sub->staff?->Lname ?? '' }}</td>
                 <td>{{ $sub->status }}</td>
                 <td>{{ \Carbon\Carbon::parse($sub->dateSubmitted)->format('M d, Y') }}</td>
                 <td>{{ Str::limit($sub->description, 50) }}</td>
                 <td>
-                  <!-- Restore Form -->
+                  {{-- Restore Form --}}
                   <form action="{{ route('admin.submissions.restore', $sub->SubmissionID) }}" method="POST" class="d-inline">
                     @csrf
                     <button type="submit" class="btn btn-primary btn-sm mb-1">Restore</button>
                   </form>
 
-                  <!-- Permanent Delete Form -->
+                  {{-- Permanent Delete Form --}}
                   <form action="{{ route('admin.submissions.forceDelete', $sub->SubmissionID) }}" method="POST" class="d-inline" onsubmit="return confirm('This will permanently delete the submission. Are you sure?');">
                     @csrf
                     @method('DELETE')
