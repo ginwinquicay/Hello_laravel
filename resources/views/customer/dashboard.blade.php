@@ -50,14 +50,12 @@ body {
 }
 .text-primary {
   color: var(--primary-color) !important;
-  font-weight: 600;
 }
 .btn-feedback {
   background-color: #6494da;
   color: white;
   border-radius: 8px;
   padding: 8px 20px;
-  font-weight: 500;
   width: 250px;
   min-width: 150px;
   transition: all 0.3s ease;
@@ -65,7 +63,7 @@ body {
 .btn-feedback:hover {
   background-color: var(--hover-accent);
   color: white;
-  transform: scale(1.04);
+  transform: scale(0.98);
 }
 table thead {
   background-color: #e8edf5;
@@ -93,12 +91,20 @@ table tbody tr:hover {
 
 <div class="container py-4">
 
+  {{-- Flash Messages --}}
+  @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ session('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
+
   <div class="card card-custom mb-4 p-4">
     <h2 class="text-primary mb-3">
       Welcome, {{ Auth::guard('customer')->user()->Fname ?? 'Customer' }}!
     </h2>
     <p>This is your personalized dashboard. From here, you can manage your submissions, update your profile, and view your submission history.</p>
-    <a href="{{ url('/customer/feedback') }}" class="btn btn-feedback fw-semibold">Submit Feedback</a>
+    <a href="{{ url('/customer/feedback') }}" class="btn btn-feedback">Submit Feedback</a>
   </div>
 
   <div class="card card-custom p-4 shadow-sm border-0">
@@ -151,27 +157,30 @@ table tbody tr:hover {
               </td>
               <td>{{ $submission->created_at->format('M d, Y') }}</td>
               <td>
-    <a href="{{ route('submission.edit', $submission->SubmissionID) }}" 
-       class="btn btn-sm btn-primary @if($submission->status === 'Closed') disabled bg-secondary border-secondary @endif"
-       @if($submission->status === 'Closed') tabindex="-1" aria-disabled="true" @endif>
-       Edit
-    </a>
+    <div class="d-flex flex-column flex-sm-row gap-1">
+        <a href="{{ route('submission.edit', $submission->SubmissionID) }}" 
+           class="btn btn-sm btn-primary @if($submission->status === 'Closed') disabled bg-secondary border-secondary @endif"
+           @if($submission->status === 'Closed') tabindex="-1" aria-disabled="true" @endif>
+           Edit
+        </a>
 
-    <form action="{{ route('submission.destroy', $submission->SubmissionID) }}" method="POST" class="d-inline">
-        @csrf
-        @method('DELETE')
-        <button type="submit" class="btn btn-sm btn-danger"
-            onclick="return confirm('Are you sure you want to delete this submission?')">
-          Delete
+        <form action="{{ route('submission.destroy', $submission->SubmissionID) }}" method="POST" class="d-inline">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-sm btn-danger"
+                onclick="return confirm('Are you sure you want to delete this submission?')">
+              Delete
+            </button>
+        </form>
+
+        <button class="btn btn-sm btn-secondary" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#comments-{{ $submission->SubmissionID }}" aria-expanded="false" 
+            aria-controls="comments-{{ $submission->SubmissionID }}">
+          Comments
         </button>
-    </form>
-
-    <button class="btn btn-sm btn-secondary mt-1" type="button" data-bs-toggle="collapse" 
-        data-bs-target="#comments-{{ $submission->SubmissionID }}" aria-expanded="false" 
-        aria-controls="comments-{{ $submission->SubmissionID }}">
-      View Comments
-    </button>
+    </div>
 </td>
+
 
             </tr>
             <tr>
@@ -202,9 +211,7 @@ table tbody tr:hover {
       </div>
     @endif
   </div>
-
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

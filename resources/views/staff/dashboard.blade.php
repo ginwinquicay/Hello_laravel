@@ -64,7 +64,7 @@ body {
 .btn-dashboard:hover {
   background-color: var(--hover-accent);
   color: white;
-  transform: scale(1.04);
+  transform: scale(0.98);
 }
 
 /* TABLE */
@@ -94,6 +94,24 @@ table tbody tr:hover {
 </nav>
 
 <div class="container py-4">
+
+  <div class="container py-4">
+
+  {{-- Flash Messages --}}
+  @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ session('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
+
+  @if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ session('error') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
+
 
   <div class="card card-custom p-4 mb-4">
     <h2 class="text-primary mb-2">

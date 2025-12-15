@@ -15,6 +15,7 @@
   --nav-bg: #4A70A9;
   --primary-color: #4A70A9;
   --hover-accent: #538ce1;
+  --button-color: #6494da;
   --radius: 0.75rem;
   --brand-font: "Momo Trust Display", sans-serif;
 }
@@ -52,18 +53,19 @@ body {
 }
 .text-primary {
   color: var(--primary-color) !important;
-  font-weight: 600;
 }
 .btn-dashboard {
-  background-color: var(--primary-color);
+  background-color: var(--button-color);
   color: white;
   border-radius: 8px;
   padding: 10px 20px;
   font-weight: 500;
+  transition: all 0.3s ease;
 }
 .btn-dashboard:hover {
-  background-color: var(--hover-accent);
-  transform: scale(1.05);
+  background-color: var(--primary-color);
+  transform: scale(0.98);
+  color: white;
 }
 .table thead {
   background-color: #e8edf5;
@@ -82,8 +84,17 @@ body {
 </nav>
 
 <div class="container py-4">
+
+  {{-- Flash Messages --}}
+  @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ session('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
+
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="text-primary">Customer Accounts</h2>
+    <h2 class="text-primary">User Accounts</h2>
     <div>
       <a href="{{ route('admin.customers.create') }}" class="btn btn-dashboard">Create New Account</a>
       <a href="{{ route('admin.dashboard') }}" class="btn btn-dashboard ms-2">Dashboard</a>

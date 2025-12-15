@@ -42,7 +42,7 @@ public function storeCustomer(Request $request)
         'Fname' => 'required|string|max:255',
         'Lname' => 'required|string|max:255',
         'email' => 'required|email|unique:customer,email',
-        'password' => 'required|string|min:6',
+        'password' => 'required|string|min:8|confirmed',
         'contact_no' => 'required|string|max:20',
         'address' => 'required|string|max:255',
     ]);
@@ -70,24 +70,25 @@ public function updateCustomer(Request $request, $id)
     $customer = Customer::findOrFail($id);
 
     $request->validate([
-        'Fname' => 'required|string|max:255',
-        'Lname' => 'required|string|max:255',
-        'email' => 'required|email|unique:customer,email,' . $customer->CustomerID . ',CustomerID',
-        'contact_no' => 'required|string|max:20',
-        'address' => 'required|string|max:255',
-    ]);
+    'Fname' => 'required|string|max:255',
+    'Lname' => 'required|string|max:255',
+    'email' => 'required|email|unique:customer,email,' . $customer->CustomerID . ',CustomerID',
+    'contact_no' => 'required|string|max:20',
+    'address' => 'required|string|max:255',
+    'password' => 'nullable|string|min:8|confirmed', // only validate if entered
+]);
 
-    $customer->update([
-        'Fname' => $request->Fname,
-        'Lname' => $request->Lname,
-        'email' => $request->email,
-        'contact_no' => $request->contact_no,
-        'address' => $request->address,
-    ]);
+$customer->update([
+    'Fname' => $request->Fname,
+    'Lname' => $request->Lname,
+    'email' => $request->email,
+    'contact_no' => $request->contact_no,
+    'address' => $request->address,
+]);
 
-    if ($request->password) {
-        $customer->update(['password' => Hash::make($request->password)]);
-    }
+if ($request->password) {
+    $customer->update(['password' => Hash::make($request->password)]);
+}
 
     return redirect()->route('admin.customers')->with('success', 'Customer updated successfully.');
 }
@@ -118,7 +119,7 @@ public function storeStaff(Request $request)
         'address' => 'required|string|max:255',
         'contact_no' => 'required|string|max:20',
         'email' => 'required|email|unique:support_staff,email',
-        'password' => 'required|string|min:6',
+        'password' => 'required|string|min:8|confirmed',
     ]);
 
     SupportStaff::create([
@@ -149,6 +150,7 @@ public function updateStaff(Request $request, $id)
         'address' => 'required|string|max:255',
         'contact_no' => 'required|string|max:20',
         'email' => 'required|email|unique:support_staff,email,' . $staff->StaffID . ',StaffID',
+        'password' => 'nullable|string|min:8|confirmed',
     ]);
 
     $staff->update([

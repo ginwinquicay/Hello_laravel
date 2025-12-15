@@ -56,14 +56,14 @@ body {
 }
 .btn-dashboard:hover {
   background-color: var(--hover-accent);
-  transform: scale(1.04);
+  transform: scale(0.98);
   color: white;
 }
 .btn{
   transition: all 0.3s ease;
 }
 .btn:hover{
-  transform: scale(1.04);
+  transform: scale(0.98);
 }
 
 /* TABLE */

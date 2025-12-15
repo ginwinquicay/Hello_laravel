@@ -14,6 +14,7 @@
   --main-bg: #e2e2e2;
   --nav-bg: #4A70A9;
   --primary-color: #4A70A9;
+  --button-color: #6494da;
   --hover-accent: #538ce1;
   --radius: 0.75rem;
   --brand-font: "Momo Trust Display", sans-serif;
@@ -51,18 +52,21 @@ body {
 }
 .text-primary {
   color: var(--primary-color) !important;
-  font-weight: 600;
 }
 .btn-dashboard {
-  background-color: var(--primary-color);
+  background-color: var(--button-color);
   color: white;
   border-radius: 8px;
   padding: 10px 20px;
-  font-weight: 500;
+  transition: all 0.3s ease;
 }
 .btn-dashboard:hover {
-  background-color: var(--hover-accent);
-  transform: scale(1.05);
+  background-color: var(--primary-color);
+  transform: scale(0.98);
+  color: white
+}
+.container{
+  max-width: 600px;
 }
 </style>
 </head>
@@ -115,6 +119,11 @@ body {
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="password_confirmation" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
       </div>
 
       <div class="mb-3">

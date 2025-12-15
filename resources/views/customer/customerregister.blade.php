@@ -121,11 +121,21 @@
               </div>
 
               <div class="mb-3">
-                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <input type="password"
+                  name="password"
+                  class="form-control"
+                  placeholder="Password"
+                  minlength="8"
+                  required>
               </div>
 
               <div class="mb-3">
-                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required>
+                <input type="password"
+                  name="password_confirmation"
+                  class="form-control"
+                  placeholder="Confirm Password"
+                  minlength="8"
+                  required>
               </div>
 
               <div class="d-grid">

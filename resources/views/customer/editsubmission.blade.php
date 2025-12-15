@@ -20,6 +20,8 @@
   --radius: 0.75rem;
   --brand-font: "Momo Trust Display", sans-serif;
   --text-prim: #4A70A9;
+  --bg-success: rgba(8, 175, 8, 0.373);
+  --bg-info: rgba(255,165,0,0.4);
 }
 
 body {
@@ -62,10 +64,9 @@ body {
 }
 .btn-primary:hover {
   background-color: var(--hover-accent);
-  transform: scale(1.04);
+  transform: scale(0.98);
   color: white;
 }
-
 .btn-ret {
   background-color: var(--secodary-color);
   border-radius: 6px;
@@ -78,11 +79,32 @@ body {
 .btn-ret:hover {
   background-color: var(--hover-accent2);
   color: white;
-  transform: scale(1.04);
+  transform: scale(0.98);
+}
+.alert-success{
+  background: var(--bg-success);
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  z-index: 999;
+  margin-top: 10px;
+}
+.alert-info{
+  background: var(--bg-info);
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  z-index: 999;
+  margin-top: 10px;
+}
+.container{
+  margin-top: 30px;
+}
+.text-prim{
+  color: var(--secodary-color);
 }
 </style>
 </head>
-
 <body>
 
 <nav class="navbar navbar-expand-lg py-3 px-4">
@@ -90,6 +112,18 @@ body {
     <a class="navbar-brand" href="#">ECHOCARE</a>
   </div>
 </nav>
+
+@if (session('success'))
+  <div class="alert-success position-absolute start-50 translate-middle-x flash-success px-4 py-3">
+    {{ session('success') }}
+  </div>
+@endif
+
+@if (session('info'))
+  <div class="alert-info position-absolute start-50 translate-middle-x flash-success px-4 py-3">
+    {{ session('info') }}
+  </div>
+@endif
 
 <div class="container py-5">
   <div class="card card-custom mx-auto p-4" style="max-width: 700px;">
@@ -130,7 +164,7 @@ body {
 </div>
 
       <div class="d-flex justify-content-end gap-2">
-        <a href="{{ url('/customer/dashboard') }}" class="btn btn-ret">Cancel</a>
+        <a href="{{ url('/customer/dashboard') }}" class="btn btn-ret">Return</a>
         <button type="submit" class="btn btn-primary px-4">Update</button>
       </div>
 

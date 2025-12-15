@@ -71,22 +71,52 @@ return redirect()->route('customer.dashboard')
     public function edit($id)
     {
         $submission = Submission::findOrFail($id);
+
         $categories = Category::all();
         $priorities = PriorityLevel::all();
+
         return view('customer.editsubmission', compact('submission', 'categories', 'priorities'));
     }
 
     public function update(Request $request, $id)
-    {
-        $submission = Submission::findOrFail($id);
-        $submission->update([
-            'description' => $request->description,
-            'CategoryID' => $request->CategoryID,
-            'PriorityID' => $request->PriorityID,
-        ]);
+{
+    $submission = Submission::findOrFail($id);
 
-        return redirect()->route('customer.dashboard')->with('success', 'Submission updated successfully!');
+    // Validate input
+    $request->validate([
+        'description' => 'required|string|max:2000',
+        'CategoryID' => 'required|exists:category,CategoryID',
+        'PriorityID' => 'required|exists:priority_level,PriorityID',
+    ]);
+
+    // Check if anything changed
+    if (
+        $submission->description == $request->description &&
+        $submission->CategoryID == $request->CategoryID &&
+        $submission->PriorityID == $request->PriorityID
+    ) {
+        // Nothing changed
+        return redirect()->route('submission.edit', $submission->SubmissionID)
+                         ->with('info', 'No changes have been made.');
     }
+
+    // Update the submission
+    $submission->update([
+        'description' => $request->description,
+        'CategoryID' => $request->CategoryID,
+        'PriorityID' => $request->PriorityID,
+    ]);
+
+    // Fetch categories and priorities again to pass to view
+    $categories = Category::all();
+    $priorities = PriorityLevel::all();
+
+    // Return back to the same edit view with updated data and success message
+    return redirect()->route('submission.edit', $submission->SubmissionID)
+                 ->with('success', 'Submission updated successfully!');
+
+}
+
 
     public function customerDashboard()
     {

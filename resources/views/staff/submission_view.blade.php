@@ -44,32 +44,6 @@ body {
   font-weight: 500;
   font-family: var(--brand-font);
 }
-.navlink {
-  color: white !important;
-  font-weight: 500;
-  font-family: var(--brand-font);
-  text-decoration: none;
-  padding: 7px 10px;
-  border-radius: 6px;
-}
-.navlink:hover {
-  background-color: red;
-  opacity: 0.8;
-  transform: scale(1.05);
-}
-.nav-btn {
-  background-color: var(--primary-color);
-  color: white;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-weight: 500;
-  text-decoration: none;
-}
-.nav-btn:hover {
-  background-color: var(--hover-accent);
-  transform: scale(1.05);
-  color: white;
-}
 /* CARD */
 .card-custom {
   background: white;
@@ -84,7 +58,6 @@ body {
 .text{
   color: var(--text-color);
 }
-
 /* BUTTONS */
 .btn-dashboard {
   background-color: var(--primary-color);
@@ -96,7 +69,7 @@ body {
 }
 .btn-dashboard:hover {
   background-color: var(--hover-accent);
-  transform: scale(1.04);
+  transform: scale(0.98);
   color: white;
 }
 
@@ -110,7 +83,7 @@ body {
 }
 .btn-dashboards:hover {
   background-color: var(--hover-accent2);
-  transform: scale(1.04);
+  transform: scale(0.98);
   color: white;
 }
 
@@ -127,24 +100,32 @@ body {
 .clsbtn{
   background-color: var(--danger-color);
   color: white;
-  padding: 5px 10px;
   border-radius: 6px;
-  border-color: none;
-  font-weight: 500;
   transition: all 0.3s ease;
 }
 .clsbtn:hover{
   background-color: #860f0f;
-  transform: scale(0.9);
+  transform: scale(0.98);
 }
 .btn-danger{
   transition: all 0.3s ease;
-  margin-top: 20px;
-  float: right;
-  padding: 10px 20px;
+  padding: 5px 10px;
 }
 .btn-danger:hover{
-  transform: scale(1.04);
+  transform: scale(0.98);
+}
+.delbtn{
+  float: right;
+  margin-top: 15px;
+  background-color: var(--danger-color);
+  color: white;
+  border-radius: 6px;
+  padding: 5px 15px;
+  transition: all 0.3s ease;
+}
+.delbtn:hover{
+  transform: scale(0.98);
+  background-color: #860f0f;
 }
 </style>
 </head>
@@ -178,9 +159,11 @@ body {
       </span>
     </div>
 
-    <div class="mb-3">
-  <strong>Status:</strong>
-  <form action="{{ route('staff.submission.status', $submission->SubmissionID) }}" method="POST" class="d-inline">
+    <div class="mb-3 d-flex align-items-center gap-2">
+  <strong class="me-2">Status:</strong>
+
+  <!-- Status form -->
+  <form action="{{ route('staff.submission.status', $submission->SubmissionID) }}" method="POST" class="d-inline-block">
     @csrf
     <select name="status" class="form-select w-auto d-inline-block" onchange="this.form.submit()">
       <option value="Pending" @selected($submission->status == 'Pending')>Pending</option>
@@ -189,15 +172,17 @@ body {
     </select>
   </form>
 
+  <!-- Close button form -->
   @if($submission->status === 'Resolved')
-    <form action="{{ route('staff.submission.close', $submission->SubmissionID) }}" method="POST" class="d-inline">
+    <form action="{{ route('staff.submission.close', $submission->SubmissionID) }}" method="POST" class="d-inline-block">
       @csrf
-      <button type="submit" class="clsbtn btn-danger ms-2" onclick="return confirm('Are you sure you want to close this submission?')">
+      <button type="submit" class="clsbtn btn-danger" onclick="return confirm('Are you sure you want to close this submission?')">
         Close
       </button>
     </form>
   @endif
 </div>
+
 
     <div class="mb-3"><strong>Description:</strong> {{ $submission->description }}</div>
     <div class="mb-3"><strong>Date Submitted:</strong> {{ \Carbon\Carbon::parse($submission->dateSubmitted)->format('M d, Y') }}</div>
@@ -243,7 +228,7 @@ body {
         <form action="{{ route('staff.submission.delete', $submission->SubmissionID) }}" method="POST" onsubmit="return confirm('Are you sure you want to mark this submission as deleted?');" class="d-inline">
           @csrf
           @method('DELETE')
-          <button type="submit" class="btn btn-danger">Delete</button>
+          <button type="submit" class="delbtn">Delete</button>
         </form>
       @else
         <span class="text-muted align-self-center">Deleted. Admin can permanently remove.</span>

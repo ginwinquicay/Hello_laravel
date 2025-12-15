@@ -14,19 +14,17 @@
   --main-bg: #e2e2e2;
   --nav-bg: #4A70A9;
   --primary-color: #4cb06c;
-  --secodary-color: #6494da;
+  --secondary-color: #6494da;
   --hover-accent: #25783e;
   --hover-accent2: #486591;
   --radius: 0.75rem;
   --brand-font: "Momo Trust Display", sans-serif;
 }
-
 body {
   background-color: var(--main-bg);
   font-family: 'Poppins', Arial, sans-serif;
   margin: 0;
 }
-
 /* NAVBAR */
 .navbar {
   background-color: var(--nav-bg);
@@ -36,19 +34,6 @@ body {
   font-weight: 500;
   font-family: var(--brand-font);
 }
-.navlink {
-  color: white !important;
-  font-weight: 500;
-  font-family: var(--brand-font);
-  text-decoration: none;
-  padding: 7px 10px;
-}
-.navlink:hover {
-  background-color: red;
-  opacity: 0.8;
-  transform: scale(1.05);
-}
-
 /* CARD */
 .card-custom {
   background: white;
@@ -71,11 +56,10 @@ body {
 .btn-feedback:hover, .btn-primary:hover {
   background-color: var(--hover-accent);
   color: white;
-  transform: scale(1.04);
+  transform: scale(0.98);
 }
-
 .btn-ret {
-  background-color: var(--secodary-color);
+  background-color: var(--secondary-color);
   border-radius: 8px;
   font-weight: 500;
   color: white;
@@ -90,9 +74,11 @@ body {
 .btn-ret:hover {
   background-color: var(--hover-accent2);
   color: white;
-  transform: scale(1.04);
+  transform: scale(0.98);
 }
-
+.text-primary{
+  color: var(--secondary-color);
+}
 /* FORM LABELS */
 .form-label {
   font-weight: 600;
@@ -116,13 +102,8 @@ body {
       <div class="card card-custom p-4 p-md-5 text-center">
         <h2 class="text-primary mb-4 fw-semibold">Submit Your Feedback</h2>
 
-        @if(session('success'))
-        <div class="alert alert-success mb-4">{{ session('success') }}</div>
-        @endif
-
         <form action="{{ route('customer.feedback.submit') }}" method="POST" class="needs-validation" novalidate>
           @csrf
-
           <div class="mb-3 text-start">
             <label for="category" class="form-label">Category</label>
             <select id="category" name="category" class="form-select" required>
@@ -164,11 +145,10 @@ body {
             @enderror
           </div>
 
-          <div class="d-flex flex-column align-items-center gap-2 mt-3">
-            <button type="submit" class="btn btn-feedback">Submit Feedback</button>
+          <div class="d-flex justify-content-center gap-3 mt-3">
             <a href="{{ url('/customer/dashboard') }}" class="btn-ret">Return</a>
+            <button type="submit" class="btn btn-feedback">Submit</button>
           </div>
-
         </form>
       </div>
     </div>

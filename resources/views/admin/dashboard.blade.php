@@ -15,6 +15,7 @@
   --nav-bg: #4A70A9;
   --primary-color: #4A70A9;
   --hover-accent: #538ce1;
+  --button-color: #6494da;
   --radius: 0.75rem;
   --brand-font: "Momo Trust Display", sans-serif;
 }
@@ -50,18 +51,18 @@ body {
 }
 .text-primary {
   color: var(--primary-color) !important;
-  font-weight: 600;
 }
 .btn-dashboard {
-  background-color: var(--primary-color);
+  background-color: var(--button-color);
   color: white;
   border-radius: 8px;
   padding: 10px 20px;
-  font-weight: 500;
+  transition: all 0.3s ease;
 }
 .btn-dashboard:hover {
-  background-color: var(--hover-accent);
-  transform: scale(1.05);
+  background-color: var(--primary-color);
+  transform: scale(0.98);
+  color: white;
 }
   </style>
 </head>
@@ -75,8 +76,6 @@ body {
 </nav>
 
 <div class="container py-4">
-
-  <!-- WELCOME CARD -->
   <div class="card card-custom mb-4 p-4">
     <h2 class="text-primary mb-3">
       Welcome, {{ Auth::guard('admin')->user()->Fname ?? 'Admin' }}!
@@ -84,11 +83,10 @@ body {
     <p>This is your administrator dashboard. Manage customers, staff, categories, priorities, and invalid submissions.</p>
   </div>
 
-  <!-- QUICK STATS -->
   <div class="row g-4 mb-4">
     <div class="col-md-4">
       <div class="card card-custom p-4 text-center">
-        <h4 class="text-primary">Total Customers</h4>
+        <h4 class="text-primary">Total Users</h4>
         <h2 class="fw-bold">{{ $customersCount }}</h2>
       </div>
     </div>
@@ -106,19 +104,16 @@ body {
     </div>
   </div>
 
-  <!-- MANAGEMENT PANELS -->
   <div class="row g-4">
 
-    <!-- MANAGE CUSTOMERS -->
     <div class="col-md-6">
       <div class="card card-custom p-4">
-        <h4 class="text-primary">Manage Customer Accounts</h4>
+        <h4 class="text-primary">Manage User Accounts</h4>
         <p>Create, update, or delete customer accounts.</p>
-        <a href="{{ route('admin.customers') }}" class="btn btn-dashboard w-100">Go to Customers</a>
+        <a href="{{ route('admin.customers') }}" class="btn btn-dashboard w-100">Go to Users</a>
       </div>
     </div>
 
-    <!-- MANAGE STAFF -->
     <div class="col-md-6">
       <div class="card card-custom p-4">
         <h4 class="text-primary">Manage Staff Accounts</h4>
@@ -127,7 +122,6 @@ body {
       </div>
     </div>
 
-    <!-- CATEGORIES -->
     <div class="col-md-6">
       <div class="card card-custom p-4">
         <h4 class="text-primary">Categories</h4>
@@ -136,7 +130,6 @@ body {
       </div>
     </div>
 
-    <!-- PRIORITIES -->
     <div class="col-md-6">
       <div class="card card-custom p-4">
         <h4 class="text-primary">Priorities</h4>
@@ -145,7 +138,6 @@ body {
       </div>
     </div>
 
-    <!-- DELETE INVALID SUBMISSIONS -->
     <div class="col-md-6">
       <div class="card card-custom p-4">
         <h4 class="text-primary">Delete Test / Invalid Submissions</h4>
@@ -155,9 +147,7 @@ body {
     </div>
 
   </div>
-
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

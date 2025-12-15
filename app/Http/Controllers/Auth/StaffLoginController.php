@@ -19,7 +19,7 @@ public function login(Request $request) {
         return redirect('/staff/dashboard'); // matches your route
     }
 
-    return back()->withErrors(['email' => 'Invalid credentials.']);
+    return back()->with(['error' => 'Invalid email or password.']);
 }
 
 public function logout(Request $request)

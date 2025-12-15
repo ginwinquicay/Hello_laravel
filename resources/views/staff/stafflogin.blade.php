@@ -14,6 +14,7 @@
       --primary-color: #4A70A9;
       --hover-accent: #538ce1;
       --brand-font: "Momo Trust Display", sans-serif;
+      --bg-error: rgba(255, 0, 0, 0.642);
     }
     body {
       font-family: 'Poppins', sans-serif;
@@ -92,6 +93,16 @@
       box-shadow: 0 3px 8px rgba(0,0,0,0.1);
       z-index: 999;
     }
+    .alert-error {
+      background: var(--bg-error);
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      z-index: 999;
+    }
+    .flash-success{
+      top: 200px;
+    }
   </style>
 </head>
 
@@ -105,9 +116,9 @@
   </div>
 </nav>
 
-@if (session('success'))
-  <div class="alert-success position-absolute top-0 start-50 translate-middle-x mt-4 px-4 py-3">
-    {{ session('success') }}
+@if (session('error'))
+  <div class="alert-error position-absolute start-50 translate-middle-x flash-success px-4 py-3">Try again!
+    {{ session('error') }}
   </div>
 @endif
 

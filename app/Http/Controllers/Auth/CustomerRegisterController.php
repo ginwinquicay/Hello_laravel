@@ -22,7 +22,7 @@ class CustomerRegisterController extends Controller
             'address' => 'required|string|max:255',
             'contact_no' => 'required|string|max:20',
             'email' => 'required|email|unique:customer,email',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
         $customer = new customer();

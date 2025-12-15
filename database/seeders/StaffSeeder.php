@@ -17,7 +17,7 @@ class StaffSeeder extends Seeder
                 'address' => 'Nabua',
                 'contact_no' => '09104175760',
                 'email' => 'staff@gmail.com',
-                'password' => Hash::make('1234567'),
+                'password' => Hash::make('12345678'),
             ],
             [
                 'Fname' => 'Maria',
@@ -25,7 +25,7 @@ class StaffSeeder extends Seeder
                 'address' => 'Legazpi',
                 'contact_no' => '09123456789',
                 'email' => 'mariastaff@gmail.com',
-                'password' => Hash::make('1234567'),
+                'password' => Hash::make('12345678'),
             ],
             [
                 'Fname' => 'John',
@@ -33,7 +33,7 @@ class StaffSeeder extends Seeder
                 'address' => 'Tabaco',
                 'contact_no' => '09234567890',
                 'email' => 'johnstaff@gmail.com',
-                'password' => Hash::make('1234567'),
+                'password' => Hash::make('12345678'),
             ],
         ];
 

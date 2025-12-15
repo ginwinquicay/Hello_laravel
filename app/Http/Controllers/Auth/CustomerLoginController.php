@@ -19,7 +19,7 @@ class CustomerLoginController extends Controller
             return redirect()->intended('/customer/dashboard');
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials.']);
+        return back()->with(['error' => 'Invalid email or password.']);
     }
     public function logout(Request $request)
     {
