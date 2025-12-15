@@ -48,6 +48,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 10px;
   }
   .card {
     border-radius: 1.2rem;
@@ -77,6 +78,9 @@
   .text:hover{
     color: purple;
   }
+  .alert-danger{
+    margin-top: 10px;
+  }
 </style>
 </head>
 <body>
@@ -88,6 +92,16 @@
   </div>
 </nav>
 
+@if ($errors->any())
+  <div class="alert alert-danger position-absolute start-50 translate-middle-x flash-success px-4 py-3">
+    <ul class="mb-0">
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif
+
 <div class="signup-wrapper">
   <div class="container">
     <div class="row justify-content-center">
@@ -95,29 +109,59 @@
         <div class="card shadow-lg">
           <div class="card-body p-4">
 
-            <h2 class="text-center mb-4 fw-semibold">Sign Up</h2>
+            <h2 class="text-center mb-4">Sign Up</h2>
 
             <form method="POST" action="{{ url('/register-customer') }}">
               @csrf
 
               <div class="mb-3">
-                <input type="text" name="Fname" class="form-control" placeholder="First Name" required>
+                <input type="text"
+       name="Fname"
+       class="form-control"
+       placeholder="First Name"
+       value="{{ old('Fname') }}"
+       required>
+
               </div>
 
               <div class="mb-3">
-                <input type="text" name="Lname" class="form-control" placeholder="Last Name" required>
+                <input type="text"
+       name="Lname"
+       class="form-control"
+       placeholder="Last Name"
+       value="{{ old('Lname') }}"
+       required>
+
               </div>
 
               <div class="mb-3">
-                <input type="text" name="address" class="form-control" placeholder="Address" required>
+                <input type="text"
+       name="address"
+       class="form-control"
+       placeholder="Address"
+       value="{{ old('address') }}"
+       required>
+
               </div>
 
               <div class="mb-3">
-                <input type="text" name="contact_no" class="form-control" placeholder="Contact Number" required>
+                <input type="text"
+       name="contact_no"
+       class="form-control"
+       placeholder="Contact Number"
+       value="{{ old('contact_no') }}"
+       required>
+
               </div>
 
               <div class="mb-3">
-                <input type="email" name="email" class="form-control" placeholder="Email" required>
+                <input type="email"
+       name="email"
+       class="form-control"
+       placeholder="Email"
+       value="{{ old('email') }}"
+       required>
+
               </div>
 
               <div class="mb-3">

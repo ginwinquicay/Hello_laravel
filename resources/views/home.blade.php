@@ -25,45 +25,34 @@
     }
     .content-box {
       max-width: 700px;
-      margin: 50px auto 30px;
+      margin: 150px auto 20px;
       background: #e2e2e2;
-      padding: 30px;
-      border-radius: 15px;
     }
     .login-container {
-      max-width: 500px;
-      margin: 0 auto 50px;
-      background: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .login-btn {
-      display: block;
-      width: 200px;
-      background: #4A70A9;
-      color: #fff;
-      padding: 12px;
-      border-radius: 30px;
-      font-weight: 500;
-      text-decoration: none;
-      margin-bottom: 15px;
-    }
+  max-width: 400px;
+  margin: 0 auto 0;
+  background: transparent;
+  padding: 30px;
+  border-radius: 15px;
+}
+  .login-btn {
+  display: block;
+  width: 100%;
+  background: #6494da;
+  color: #fff;
+  padding: 14px 0;        /* FIX: remove horizontal padding */
+  border-radius: 25px;
+  font-weight: 500;
+  font-size: 18px;        /* optional: more balanced */
+  text-decoration: none;
+  margin-bottom: 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
     .login-btn:hover {
-      background-color: #243e69;
+      background-color: #4A70A9;
       color: #fff;
-    }
-    .sbtn {
-      background: #4A70A9;
-      color: #fff;
-      padding: 12px 30px;
-      border-radius: 30px;
-      font-weight: 500;
-      text-decoration: none;
-    }
-    .sbtn:hover {
-      background-color: #243e69;
-      color: #fff;
+      transform: scale(0.97);
     }
   </style>
 </head>
@@ -78,11 +67,6 @@
 
 <div class="content-box text-center">
   <h3 class="fw-bold mb-3">Welcome to ECHOCARE</h3>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus deserunt,
-    aut odit placeat deleniti dolores, necessitatibus repellat temporibus beatae
-    repudiandae dolore quasi nam a quo inventore.
-  </p>
 </div>
 
 <div class="login-container text-center">

@@ -12,7 +12,8 @@
     :root {
       --nav-bg: #4A70A9;
       --primary-color: #4A70A9;
-      --hover-accent: #538ce1;
+      --button-color: #6494da;
+      --hover-accent: #3b6199;
       --brand-font: "Momo Trust Display", sans-serif;
       --bg-error: rgba(255, 0, 0, 0.642);
     }
@@ -74,24 +75,19 @@
     }
     .btn-custom {
       width: 100%;
-      background: var(--primary-color);
+      background: var(--button-color);
       border: none;
       padding: 12px;
       font-size: 16px;
       color: white;
       border-radius: 10px;
       font-weight: 500;
-      transition: 0.2s;
+      transition: all 0.3s ease;
     }
     .btn-custom:hover {
       background-color: var(--hover-accent);
-    }
-    .alert-success {
-      background: var(--primary-color);
       color: white;
-      border-radius: 10px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-      z-index: 999;
+      transform: scale(0.98);
     }
     .alert-error {
       background: var(--bg-error);
