@@ -22,7 +22,6 @@ Route::get('/', function() {return view('welcome');});
 //Route::get('/users', [UserController::class, 'index']);
 
 Route::get('/home', function () {return view('home');})->name('home');
-Route::get('/test', function(){return view('testing/test');});
 
 //Customer Routes
 
