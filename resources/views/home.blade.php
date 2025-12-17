@@ -23,7 +23,7 @@
     .content-box {
       color: #0049b7;
       max-width: 700px;
-      margin: 130px auto 20px;
+      margin: 100px auto 20px;
       background: #e2e2e2;
     }
     .login-container {
@@ -65,6 +65,7 @@
 
 <div class="content-box text-center">
   <h3 class="fw-bold mb-3">EchoCare Services</h3>
+  <p class="fw-semibold text-dark">Feedback and Complaint Management System</p>
 </div>
 
 <div class="login-container text-center">
